@@ -106,7 +106,7 @@ def parse_soup(soup):
 
             if line not in J['features']:
                J['features'].append(line)
-               print line
+               print "::: " + line
 
       save_features()
 
@@ -118,13 +118,13 @@ def parse_soup(soup):
       next = random.choice(next)
 
    except:
-      print "*** Error getting features ***"
+      print "*** Error getting features"
 
       f = codecs.open("error.html", "w", "utf-8")
       f.write(soup.prettify())
       f.close()
 
-      print "*** Getting new track after waiting ***"
+      print "*** Getting new track after waiting"
       time.sleep(1)
       next = get_track_from_artist(get_artist_from_genre(random.choice(GENRES)))
 
@@ -155,10 +155,16 @@ def main():
    get_genres()
 
 
-   for i in range(25):
+   for i in range(10):
+      print "----------------------------------------------------------------------------------"
+      print "Genre " + str(i + 1)
+      print "----------------------------------------------------------------------------------"
       track = get_track_from_artist(get_artist_from_genre(random.choice(GENRES)))
 
-      for j in range(25):
+      for j in range(50):
+         print "----------------------------------------------------------------------------------"
+         print "Track " + str(j + 1)
+         print "----------------------------------------------------------------------------------"
          track = parse_soup(get_soup(track))
          time.sleep(1)
 
