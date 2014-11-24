@@ -2,3 +2,4 @@ __pycache__
 *.pyc
 keys.*
 error.html
+corpora
