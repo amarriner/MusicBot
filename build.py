@@ -3,7 +3,9 @@
 from pattern.en import conjugate, PARTICIPLE
 
 import json
+import keys
 import random
+import twitter
 import sys
 
 
@@ -75,7 +77,11 @@ def build_tweet():
    feature2 = clean_feature(random.choice(j['features']))
    feature3 = random.choice(j['features'])
 
-   s = "I like the " + feature1 + " and " + feature2 + " with " + \
+   dont = ""
+   if random.randrange(100) <= 50:
+      dont = "don't "
+
+   s = "I " + dont + "like the " + feature1 + " and " + feature2 + " with " + \
           feature3 + " in " + band + "'s " + '"' + track + '"'
 
    return s
@@ -86,11 +92,16 @@ def main():
 
    s = ""
    while len(s) > 140 or not s:
-
       s = build_tweet()
-      print "Length: " + str(len(s))
-      print s
-      print "--------------------------------------------------------------------------"
+
+   print "Length: " + str(len(s))
+   print s
+
+   # Connect to Twitter
+   api = twitter.Api(keys.consumer_key, keys.consumer_secret, keys.access_token, keys.access_token_secret)
+
+   # Tweet
+   status = api.PostUpdate(s)
 
 
 if __name__ == "__main__":
